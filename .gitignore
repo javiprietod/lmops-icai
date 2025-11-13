@@ -75,4 +75,4 @@ temp/
 app/models/file_info.py
 app/services/file_info_services.py
 app/routers/file_info.py
-SOLUCION_TAREA_1_VALIDACION_FORMATO.md
+SOLUCION_1_VALIDACION_FORMATO.md
