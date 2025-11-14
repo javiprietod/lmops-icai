@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from app.routers import file_info
 
 # Importar routers
 from app.routers.agent import router as image_processor
@@ -27,15 +28,6 @@ app.add_middleware(
 
 # Incluimos los routers
 app.include_router(image_processor, prefix="/v1/image")
-
-# Servir archivos estáticos del frontend
-# Buscar el directorio frontend tanto en desarrollo como en Docker
-frontend_dir = Path(__file__).parent.parent / "frontend"
-if frontend_dir.exists():
-    app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="frontend")
-    print(f"✅ Frontend servido desde: {frontend_dir}")
-else:
-    print(f"⚠️  Directorio frontend no encontrado: {frontend_dir}")
 @app.get("/healthcheck", response_class=JSONResponse)
 async def healthcheck():
     """
@@ -45,6 +37,26 @@ async def healthcheck():
         JSONResponse: Estado del servidor.
     """
     return JSONResponse({"status": "ok", "message": "Service is running"})
+
+
+# TODO 8: Importar el router file_info
+# Pista: from app.routers import file_info
+# ARRIBA
+
+
+# TODO 9: Registrar el router en la aplicación y añade el  prefix="/v1/files"
+# Pista: app.include_router(file_info.router)
+app.include_router(file_info.router, prefix="/v1/files")
+
+
+# Servir archivos estáticos del frontend
+# Buscar el directorio frontend tanto en desarrollo como en Docker
+frontend_dir = Path(__file__).parent.parent / "frontend"
+if frontend_dir.exists():
+    app.mount("/", StaticFiles(directory=str(frontend_dir), html=True), name="frontend")
+    print(f"✅ Frontend servido desde: {frontend_dir}")
+else:
+    print(f"⚠️  Directorio frontend no encontrado: {frontend_dir}")
 
 
 # Descomentar si ejecutar en local se debe ejecutar desde la raiz del proyecto con python -m parrot.app

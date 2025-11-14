@@ -119,8 +119,10 @@ class GeminiService:
                 
                 try:
                     # Parse JSON response
-                    result = json.loads(result_text)
-                    return result
+                    if type(result_text) is dict:
+                        return json.loads(result_text)  # Already a dict
+                    return json.loads(result_text[0])
+                
                 except json.JSONDecodeError as e:
                     self.logger.error(
                         f"Failed to parse Gemini response as JSON: {e}",

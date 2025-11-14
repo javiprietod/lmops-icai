@@ -58,7 +58,7 @@ def main():
     print("=" * 80)
     
     # Reemplaza con la ruta a tu volante
-    volante_path = r"C:\Users\jaandr7\Downloads\volante.png"
+    volante_path = r"image.png"
 
     try:
         # Codificar imagen
@@ -114,26 +114,27 @@ def main():
     - filiacion_asegurado: nombre del paciente
     - prescripcion: qué tratamiento se prescribe
     - fecha_primeros_sintomas: cuándo comenzaron los síntomas
+    Devuelve la respuesta en formato JSON con claves exactas.
     """
     
-    print("Este ejemplo muestra cómo usar un prompt personalizado")
-    print("Descomenta el código para probar:")
+    # print("Este ejemplo muestra cómo usar un prompt personalizado")
+    # print("Descomenta el código para probar:")
     
-    # try:
-    #     image_base64 = encode_image_to_base64("ruta/a/volante.jpg")
-    #     response = requests.post(
-    #         API_URL,
-    #         json={
-    #             "image_base64": image_base64,
-    #             "prompt": prompt_personalizado  # Prompt personalizado
-    #         },
-    #         headers={"Content-Type": "application/json"}
-    #     )
-    #     response.raise_for_status()
-    #     result = response.json()
-    #     print(json.dumps(result, indent=2, ensure_ascii=False))
-    # except Exception as e:
-    #     print(f"Error: {e}")
+    try:
+        image_base64 = encode_image_to_base64("image.png")
+        response = requests.post(
+            API_URL,
+            json={
+                "image_base64": image_base64,
+                "prompt": prompt_personalizado  # Prompt personalizado
+            },
+            headers={"Content-Type": "application/json"}
+        )
+        response.raise_for_status()
+        result = response.json()
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":
